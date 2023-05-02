@@ -13,6 +13,13 @@ function removeElement() {
     this.parentElement.remove();
 };
 
+//function for checking list items when its clicked on
+document.querySelectorAll("#list>li").forEach((element)=>{
+    element.addEventListener("click", () => {
+        element.classList.toggle("checked");
+    });
+});
+
 //Function for adding new elements 
 function newElement() {
     let toDO = document.querySelector("#task").value;
@@ -30,6 +37,9 @@ function newElement() {
         toDoLi.appendChild(deleteBtn); //appending the delete button with list item
         document.querySelector("#task").value = ""; //clearing the input
         $(".success").toast("show"); //triggering the toast that will be shown when the item added.
+        toDoLi.addEventListener("click", () => {
+            element.classList.toggle("checked");
+        }); //be in a checked position when its clicked on
     } else {
         //triggering the toast that will be shown when the item couldn't be added.
         $(".error").toast("show");
