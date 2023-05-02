@@ -38,7 +38,7 @@ function newElement() {
         document.querySelector("#task").value = ""; //clearing the input
         $(".success").toast("show"); //triggering the toast that will be shown when the item added.
         toDoLi.addEventListener("click", () => {
-            element.classList.toggle("checked");
+            toDoLi.classList.toggle("checked");
         }); //be in a checked position when its clicked on
     } else {
         //triggering the toast that will be shown when the item couldn't be added.
