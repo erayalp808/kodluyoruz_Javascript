@@ -105,3 +105,15 @@ input {
 .button:hover {
   background-color: #bbb;
 }
+
+.removeBtn {
+  float: right;
+  border: none;
+  background-color: rgba(182, 182, 206, 0.5);
+  border-radius: 40%;
+  align-self: flex-end;
+}
+
+.removeBtn:hover {
+  background-color: rgba(245, 112, 24, 0.7);
+}
