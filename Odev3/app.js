@@ -81,3 +81,14 @@ const menu = [
     desc: `Red bean paste dessert, serving with honey.`,
   },
 ];
+
+//Adding Buttons
+let buttons = ["All", "Korea", "Japan", "China"]; //Creating array that contains button names
+buttons.forEach((element)=>{
+  //assigning the elements
+  let button = document.createElement("button");
+  button.classList.add("btn", "btn-outline-dark", "btn-item");
+  let btnContainer = document.querySelector(".btn-container");
+  button.innerHTML = element; //changing the button name with our element
+  btnContainer.append(button); //appending it with container
+});
