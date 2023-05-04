@@ -32,7 +32,7 @@ const menu = [
     category: "China",
     price: 5.99,
     img:
-      "https://www.savingdessert.com/wp-content/uploads/2019/02/Dan-Dan-Noodles-10.jpg",
+      "https://hips.hearstapps.com/hmg-prod/images/190226-dan-dan-noodles-253-1552085451.jpg?crop=0.670xw:1.00xh;0.207xw,0&resize=1200:*",
     desc: `Dan dan noodle, serving with green onion `,
   },
   {
@@ -87,8 +87,42 @@ let buttons = ["All", "Korea", "Japan", "China"]; //Creating array that contains
 buttons.forEach((element)=>{
   //assigning the elements
   let button = document.createElement("button");
-  button.classList.add("btn", "btn-outline-dark", "btn-item");
+  button.classList.add("btn", "btn-outline-dark", "btn-item"); //adding classes
+  button.setAttribute("id", element); //assigning button an id
   let btnContainer = document.querySelector(".btn-container");
   button.innerHTML = element; //changing the button name with our element
   btnContainer.append(button); //appending it with container
 });
+
+//Adding menu items
+menu.forEach((element)=>{
+  //assigning elements
+  let menuItem = document.createElement("div"); //menu items div
+  menuItem.classList.add("menu-items", "col-lg-6", "col-sm-12"); //adding classes to menu items
+
+  let img = new Image(); //menu item img
+  //taking the object's datas for img
+  img.src = element.img;
+  img.alt = element.title;
+  img.classList.add("photo");
+  menuItem.append(img); //appending img to menu items div
+
+  let menuInfo = document.createElement("div");
+  menuInfo.classList.add("menu-info");
+
+  let menuTitle = document.createElement("div");
+  menuTitle.classList.add("menu-title");
+  menuTitle.innerHTML = `<h4>${element.title}</h4>
+  <h4 class="price">${element.price}</h4>`;
+  menuInfo.append(menuTitle);
+
+  let menuText = document.createElement("div");
+  menuText.classList.add("menu-text")
+  menuText.innerHTML = element.desc
+  menuInfo.append(menuText);
+
+  menuItem.append(menuInfo);
+
+  let section = document.querySelector(".section-center")
+  section.append(menuItem);
+})
