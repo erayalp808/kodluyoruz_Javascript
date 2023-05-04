@@ -83,8 +83,8 @@ const menu = [
 ];
 
 //Adding Buttons
-let buttons = ["All", "Korea", "Japan", "China"]; //Creating array that contains button names
-buttons.forEach((element)=>{
+let categories = ["All", "Korea", "Japan", "China"]; //Creating array that contains button names
+categories.forEach((element)=>{
   //assigning the elements
   let button = document.createElement("button");
   button.classList.add("btn", "btn-outline-dark", "btn-item"); //adding classes
@@ -94,35 +94,86 @@ buttons.forEach((element)=>{
   btnContainer.append(button); //appending it with container
 });
 
-//Adding menu items
-menu.forEach((element)=>{
-  //assigning elements
-  let menuItem = document.createElement("div"); //menu items div
-  menuItem.classList.add("menu-items", "col-lg-6", "col-sm-12"); //adding classes to menu items
+function createMenu(menuElements){
+  let menuItems = menuElements.map((element)=>{
+    //assigning elements
+    let menuItem = document.createElement("div"); //menu items div
+    menuItem.classList.add("menu-items", "col-lg-6", "col-sm-12"); //adding classes to menu items
+  
+    let img = new Image(); //menu item img
+    //taking the object's datas for img
+    img.src = element.img;
+    img.alt = element.title;
+    img.classList.add("photo");
+    menuItem.append(img); //appending img to menu items div
+  
+    let menuInfo = document.createElement("div"); //creating menu info div
+    menuInfo.classList.add("menu-info");
+  
+    let menuTitle = document.createElement("div"); //creating menu title div
+    menuTitle.classList.add("menu-title");
+    menuTitle.innerHTML = `<h4>${element.title}</h4>
+    <h4 class="price">${element.price}</h4>`; //adding the menu title content
+    menuInfo.append(menuTitle); //appending menu title to menu info
+  
+    let menuText = document.createElement("div"); //creating menu text div
+    menuText.classList.add("menu-text")
+    menuText.innerHTML = element.desc; //putting item's decsription to the menu text
+    menuInfo.append(menuText); //appending menu text to menu info
+  
+    menuItem.append(menuInfo); //appending menu info to menu item structure
+  
+    return menuItem;
+  })
+  
+  //Function for listing all elements
+  function list() {
+      //clearing the old menu
+      let OldMenu = document.querySelectorAll(".section-center>div")
+      OldMenu.forEach(element => {
+        element.remove()
+      })
+      //selecting the section which menu item will be appended
+      let section = document.querySelector(".section-center");
+      menuItems.forEach((element)=>{
+      section.append(element); //appending the menu item to the section
+    })
+  }
+  list();
+}
+//Listing all menu items on load
+createMenu(menu);
 
-  let img = new Image(); //menu item img
-  //taking the object's datas for img
-  img.src = element.img;
-  img.alt = element.title;
-  img.classList.add("photo");
-  menuItem.append(img); //appending img to menu items div
+//Filter functions
+function checkCategoryChina(meal){
+  return meal.category == "China";
+}
+function checkCategoryKorea(meal){
+  return meal.category == "Korea";
+}
+function checkCategoryJapan(meal){
+  return meal.category == "Japan";
+}
 
-  let menuInfo = document.createElement("div");
-  menuInfo.classList.add("menu-info");
-
-  let menuTitle = document.createElement("div");
-  menuTitle.classList.add("menu-title");
-  menuTitle.innerHTML = `<h4>${element.title}</h4>
-  <h4 class="price">${element.price}</h4>`;
-  menuInfo.append(menuTitle);
-
-  let menuText = document.createElement("div");
-  menuText.classList.add("menu-text")
-  menuText.innerHTML = element.desc
-  menuInfo.append(menuText);
-
-  menuItem.append(menuInfo);
-
-  let section = document.querySelector(".section-center")
-  section.append(menuItem);
-})
+//Functions to be called when clicked on buttons 
+let buttons = document.querySelectorAll(".btn-item");
+//getting the id of the button when it is clicked on to filter the list
+buttons.forEach((element)=>{
+  element.addEventListener("click", (event) => {
+    //Using switch cases to assign categories
+    switch(event.target.id){
+      case "Japan":
+        createMenu(menu.filter(checkCategoryJapan));
+        break;
+      case "Korea":
+        createMenu(menu.filter(checkCategoryKorea));
+        break;
+      case "China":
+        createMenu(menu.filter(checkCategoryChina));
+        break;
+      case "All":
+        createMenu(menu);
+        break;
+    }
+  })
+}) 
